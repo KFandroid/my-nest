@@ -1,0 +1,19 @@
+{
+  "name": "myedit",
+  "version": "1.0.0",
+  "description": "simple rich text",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "rich",
+    "text"
+  ],
+  "author": "LHB",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^4.42.0",
+    "webpack-cli": "^3.3.11"
+  }
+}
