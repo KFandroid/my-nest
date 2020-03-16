@@ -5,16 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
+<body v-on:keyup="afterEnter">
     <div id="app">
         <div class="x-editor">
-            <div class="menu"></div>
-            <div class="editor" contenteditable="true">
+            <div class="menu">
+                <button @click="firstLineIndent">首行缩进</button>
+                <button @click="simpleCommand('indent')">段落缩进</button>
+                <button @click="simpleCommand('bold')">加粗</button>
+                <input type="text" placeholder="文本字体" @input="changeFontSize" :value="editWindowStyle.fontSize">
+            </div>
+            <div ref="editorWindow"  class="editor" contenteditable="true">
                 
             </div>
         </div>
     </div>
 </body>
 <script src="vue.js"></script>
+<script src="jquery.js"></script>
 <script src="main.js"></script>
+
+<style>
+    .x-editor .editor {
+        height: 600px;
+        font-size: 12px;
+    }
+</style>
 </html>
