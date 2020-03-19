@@ -1,20 +1,32 @@
+<template>
+  <div class="x-editor">
+            <div class="menu">
+                <button @click="firstLineIndent">首行缩进</button>
+                <button @click="simpleCommand('indent')">段落缩进</button>
+                <button @click="simpleCommand('bold')">加粗</button>
+                <input type="text" placeholder="文本字体" @input="changeFontSize" :value="editWindowStyle.fontSize">
+            </div>
+            <div ref="editorWindow"  class="editor" contenteditable="true">
+                
+            </div>
+        </div>
+</template>
+
+<script>
 function hasAbc(str) {
     const testRegExp = /[a-z]+/
     return testRegExp.test(str)
 }
-
-
-const app = new Vue({
-    el: '#app',
-    data() {
-        return {
+export default {
+  name: '',
+  data() {
+    return {
             type: 'text',
             message: 'Hello World!',
             editWindowStyle: {}
         }
-    },
-    mounted() {
-        this.onEventListener()
+  },
+   mounted() {
         this.editWindowStyle = this.$refs.editorWindow.style
     },
     methods: {
@@ -37,9 +49,16 @@ const app = new Vue({
         simpleCommand(command) {
             document.execCommand(command)
         },
-        afterEnter (){
-        },
-        onEventListener() {
-        }
     },
-})
+  components: {
+
+  }
+}
+</script>
+
+<style scoped lang="less">
+.x-editor .editor {
+        height: 600px;
+        font-size: 12px;
+    }
+</style>
