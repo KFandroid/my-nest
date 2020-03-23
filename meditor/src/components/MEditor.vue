@@ -6,9 +6,11 @@
                 <button @click="simpleCommand('bold')">加粗</button>
                 <input type="text" placeholder="文本字体" @input="changeFontSize" :value="editWindowStyle.fontSize">
             </div>
-            <div ref="editorWindow"  class="editor" contenteditable="true">
-                
+            <div ref="editorWindowContainer">
+                <div ref="editorWindow" @input="changeText" class="editor" contenteditable="true">
+                </div>
             </div>
+            
         </div>
 </template>
 
@@ -26,10 +28,17 @@ export default {
             editWindowStyle: {}
         }
   },
+  props: {
+      textOwner: Object,
+  },
    mounted() {
         this.editWindowStyle = this.$refs.editorWindow.style
     },
     methods: {
+        changeText() {
+            this.textOwner.text = this.$refs.editorWindowContainer.innerHTML
+            console.log(this.textOwner)
+        },
         changeFontSize(e) {
             const value = e.target.value
            if(!hasAbc(value)) {
@@ -58,6 +67,8 @@ export default {
 
 <style scoped lang="less">
 .x-editor .editor {
+        border: 1px solid blue;
+        border-radius: 4px;
         height: 600px;
         font-size: 12px;
     }

@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <MEditor/>
+    <create-blog/>
   </div>
 </template>
 
 <script>
-import MEditor from './components/MEditor.vue'
+import CreateBlog from './views/blog/create'
 
 export default {
   name: 'App',
   components: {
-    MEditor
+    CreateBlog
   }
 }
 </script>
