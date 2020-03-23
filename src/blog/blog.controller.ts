@@ -1,5 +1,6 @@
-import { Controller, Get, Param, Post, Body } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Res, HttpStatus } from '@nestjs/common';
 import {CreateBlogDto} from './dto/create-blog.dto'
+import { Response } from 'express'
 
 @Controller('blog')
 export class BlogController {
@@ -9,8 +10,10 @@ export class BlogController {
     }
 
     @Post()
-    async create(@Body() createBlogDto: CreateBlogDto) {
+    async create(@Body() createBlogDto: CreateBlogDto, @Res() res: Response) {
         console.log(createBlogDto)
-        return `This action adds a blog`
+        res.status(HttpStatus.CREATED).send({
+            status:'ojbk'
+        });
     }
 }

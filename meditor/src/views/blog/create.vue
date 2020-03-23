@@ -30,7 +30,11 @@ export default {
   methods:{
     async createBlog() {
       const result = await axios.post('blog', this.blog)
-      console.log(result)
+      if(result.status === 201) {
+        alert('创建成功！')
+      } else {
+        alert('创建失败！')
+      }
     }
   }
 }
