@@ -9,5 +9,5 @@ export class Blog {
     title: string;
 
     @Column("text")
-    content: string;
+    text: string;
 }
