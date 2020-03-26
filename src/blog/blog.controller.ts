@@ -1,19 +1,30 @@
-import { Controller, Get, Param, Post, Body, Res, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Delete } from '@nestjs/common';
 import {CreateBlogDto} from './dto/create-blog.dto'
-import { Response } from 'express'
+import { Blog } from './blog.entity'
+import { BlogService } from './blog.service'
 
 @Controller('blog')
 export class BlogController {
-    @Get(':id')
-     getBlog(@Param() params): string {
-        return `this action is get Blog No${params.id}`
-    }
+
+    constructor(private readonly blogService: BlogService) {}
 
     @Post()
-    async create(@Body() createBlogDto: CreateBlogDto, @Res() res: Response) {
-        console.log(createBlogDto)
-        res.status(HttpStatus.CREATED).send({
-            status:'ojbk'
-        });
+    create(@Body() createBlogDto: CreateBlogDto): Promise<Blog> {
+        return this.blogService.create(createBlogDto);
+    }
+
+    @Get()
+    async findAll(): Promise<Blog[]> {
+        return this.blogService.findAll();
+    }
+
+    @Get(':id')
+    findOne(@Param('id') id: string): Promise<Blog> {
+        return this.blogService.findOne(id);
+    }
+
+    @Delete(':id')
+    async remove(@Param('id') id: string): Promise<void> {
+        await this.blogService.remove(id);
     }
 }

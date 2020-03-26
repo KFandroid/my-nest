@@ -15,7 +15,7 @@ export class BlogService {
         const blog = new Blog();
         blog.title = createBlogDto.title;
         blog.text = createBlogDto.text;
-
+        console.log('Blog is', blog)
         return this.blogRepository.save(blog)
     }
 
