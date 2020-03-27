@@ -106,6 +106,22 @@ export default {
         },
         dealDbClick(e) {
             console.log('event is', e)
+            let target = e.target
+            let nodeName = target.nodeName
+            let clientWidth = document.body.clientWidth
+                    let clientHeight = document.body.clientHeight
+                    let imgWidth = target.naturalWidth
+                    let imgHeight = target.naturalHeight
+                    let top = (clientHeight - imgHeight) / 2
+                    let left = (clientWidth - imgWidth) / 2
+            switch(nodeName) {
+                case 'IMG':
+                    
+                    document.body.innerHTML += `
+                    <img style="position:absolute;top:${top}px;left:${left}px;" src="${target.src}"/>
+                    `
+                    break
+            }
         }
     },
   components: {
