@@ -26,7 +26,7 @@ import { join } from 'path'
       "host": "localhost",
       "port": 3306,
       "username": "root",
-      "password": "123456",
+      "password": "940811Lu",
       "database": "myblog",
       "synchronize": true,
       "logging": false,

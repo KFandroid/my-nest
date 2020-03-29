@@ -71,15 +71,13 @@ export default {
         headers: {'Content-Type': 'multipart/form-data'}
     }).then((response) => {
         const url = `http://localhost:3000/${response.data.filename}`
-        console.log(url)
+        // const url = `http://120.55.90.86:3000/${response.data.filename}`
         this.insertImgCommand(url) 
-        console.log(response) 
         })
 
         },
         changeText() {
             this.textOwner.text = this.$refs.editorWindowContainer.innerHTML
-            console.log(this.textOwner)
         },
         changeFontSize(e) {
             const value = e.target.value
@@ -102,10 +100,10 @@ export default {
         },
         insertImgCommand(url) {
             this.$refs.editorWindow.innerHTML += `<img style="margin-left: 20%;" width="60%" src="${url}"/>`
+            this.textOwner.text = this.$refs.editorWindowContainer.innerHTML
             // document.execCommand('insertImage', false, url)
         },
         dealDbClick(e) {
-            console.log('event is', e)
             let target = e.target
             let nodeName = target.nodeName
             let clientWidth = document.body.clientWidth
