@@ -27,6 +27,7 @@
 
 <script>
 import axios from 'axios'
+import * as crypto from 'crypto'
 function hasAbc(str) {
     const testRegExp = /[a-z]+/
     return testRegExp.test(str)
@@ -48,8 +49,21 @@ export default {
         this.editWindowStyle = this.$refs.editorWindow.style
     },
     methods: {
+        encodeImageFileAsURL(file) {
+            var reader = new FileReader();
+            reader.onloadend = function() {
+            console.log('RESULT', reader.result)
+            const md5 = crypto.createHash('md5').update(reader.result).digest("hex")
+            console.log(md5)
+            }
+            
+            reader.readAsDataURL(file);
+            
+        },
         fileSelected() {
-            var file = document.getElementById('fileToUpload').files[0];
+            var file = document.getElementById('fileToUpload').files[0]
+            this.encodeImageFileAsURL(file)
+            console.log(file)
         if (file) {
         var fileSize = 0;
         if (file.size > 1024 * 1024)
