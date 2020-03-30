@@ -53,9 +53,10 @@ export default {
             var reader = new FileReader();
             reader.onloadend = function() {
             console.log('RESULT', reader.result)
-            }
             const md5 = crypto.createHash('md5').update(reader.result).digest("hex")
             console.log(md5)
+            }
+            
             reader.readAsDataURL(file);
             
         },
