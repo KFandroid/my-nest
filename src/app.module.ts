@@ -8,6 +8,7 @@ import { BlogModule } from './blog/blog.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/user.entity';
 import { Blog } from './blog/blog.entity';
+import { File } from './upload/entities/file.entity';
 import { UploadModule } from './upload/upload.module'
 import { ServeStaticModule } from '@nestjs/serve-static'
 import { join } from 'path'
@@ -30,7 +31,7 @@ import { join } from 'path'
       "database": "myblog",
       "synchronize": true,
       "logging": false,
-      "entities": [User, Blog]
+      "entities": [User, Blog, File]
    })],
   controllers: [AppController],
   providers: [AppService],

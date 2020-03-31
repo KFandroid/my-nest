@@ -22,7 +22,9 @@ export class BlogController {
   }
   ))
   async uploadFile(@UploadedFile() file) {
+    console.log(file)
     const response = {
+      md5: file.md5,
       originalname: file.originalname,
       filename: file.filename,
     };
