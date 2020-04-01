@@ -85,22 +85,33 @@ export default {
             let file = document.getElementById('fileToUpload').files[0]
             file.id = this.md5
           let res = await axios.get(`upload/${file.id}`)
+          let nameArr = file.name.split('.')
+          let name = nameArr.slice(0, nameArr.length - 1).join('.') + this.md5 + '.' + nameArr[nameArr.length - 1]
+
+          file.originalname = name
+        //   file.name = name
+          console.log('file is', file)
           fd.append("image", file);
+          fd.append('md5', this.md5)
           if(res.data === '') {
-              axios.post(`upload/file`, file).then(res2 => {
+              axios.post(`upload/file`, {
+                  id: this.md5,
+                  name: name
+              }).then(res2 => {
                   console.log(res2)
               })
               axios({
         method: 'post',
-        url: 'upload',
+        url: `upload`,
         data: fd,
         headers: {'Content-Type': 'multipart/form-data'}
     }).then((response) => {
         const url = `http://localhost:3000/${response.data.filename}`
-        console.log(url)
-        this.insertImgCommand(url) 
-        console.log(response) 
+        this.insertImgCommand(url)
         })
+          } else {
+const url = `http://localhost:3000/${res.data.name}`
+        this.insertImgCommand(url)
           }
         },
         changeText() {
@@ -127,6 +138,7 @@ export default {
         },
         insertImgCommand(url) {
             this.$refs.editorWindow.innerHTML += `<img style="margin-left: 20%;" width="60%" src="${url}"/>`
+            this.textOwner.text = this.$refs.editorWindowContainer.innerHTML
             // document.execCommand('insertImage', false, url)
         },
         dealDbClick(e) {
