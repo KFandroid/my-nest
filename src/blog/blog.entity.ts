@@ -1,5 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
-
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToMany, JoinTable } from 'typeorm';
+import { Category } from '../category/category.entity'
 @Entity()
 export class Blog {
     @PrimaryGeneratedColumn("uuid")
@@ -16,4 +16,10 @@ export class Blog {
 
     @Column("text")
     text: string;
+
+    @ManyToMany(type => Category)
+    @JoinTable()
+    categories: Category[];
+
+
 }
