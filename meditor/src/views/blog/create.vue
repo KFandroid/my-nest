@@ -31,9 +31,9 @@ export default {
     async createBlog() {
       const result = await axios.post('blog', this.blog)
       if(result.status === 201) {
-        alert('创建成功！')
+        alert('创建博客成功！')
       } else {
-        alert('创建失败！')
+        alert('创建博客失败！')
       }
     }
   }

@@ -6,13 +6,13 @@
                 <button @click="simpleCommand('bold')">加粗</button>
                 <div class="row">
         <label for="fileToUpload">选择要插入的图片</label><br>
-        <input type="file" name="fileToUpload" id="fileToUpload" @change="fileSelected">
+        <input type="file" name="fileToUpload"  id="fileToUpload" @change="fileSelected">
     </div>
     <div id="fileName"></div>
     <div id="fileSize"></div>
     <div id="fileType"></div>
     <div class="row">
-        <input type="button" @click="uploadFile" value="确认插入此图片">
+        <input type="button" @click="uploadFile" :disabled="showLoadingFile" value="确认插入此图片">
     </div>
     <div id="progressNumber"></div>
                 <input type="text" placeholder="文本字体" @input="changeFontSize" :value="editWindowStyle.fontSize">
@@ -21,8 +21,9 @@
                 <div ref="editorWindow" @dblclick="dealDbClick" @input="changeText" class="editor" contenteditable="true">
                 </div>
             </div>
-            
+            <ui-loading rows="5" v-show="showLoadingFile">正在加载中<ui-dot></ui-dot></ui-loading>
         </div>
+        
 </template>
 
 <script>
@@ -37,6 +38,8 @@ export default {
   name: '',
   data() {
     return {
+        md5: '',
+        showLoadingFile: false,
             type: 'text',
             message: 'Hello World!',
             editWindowStyle: {}
@@ -51,10 +54,11 @@ export default {
     methods: {
         encodeImageFileAsURL(file) {
             var reader = new FileReader();
-            reader.onloadend = function() {
-            console.log('RESULT', reader.result)
+            reader.onloadend = ()=> {
             const md5 = crypto.createHash('md5').update(reader.result).digest("hex")
             console.log(md5)
+            this.md5 = md5
+            this.showLoadingFile = false
             }
             
             reader.readAsDataURL(file);
@@ -62,6 +66,7 @@ export default {
         },
         fileSelected() {
             var file = document.getElementById('fileToUpload').files[0]
+            this.showLoadingFile = true
             this.encodeImageFileAsURL(file)
             console.log(file)
         if (file) {
@@ -75,12 +80,29 @@ export default {
             document.getElementById('fileType').innerHTML = 'Type: ' + file.type;
             }
         },
-        uploadFile() {
+        async uploadFile() {
             var fd = new FormData();
-    fd.append("image", document.getElementById('fileToUpload').files[0]);
-    axios({
+            let file = document.getElementById('fileToUpload').files[0]
+            file.id = this.md5
+          let res = await axios.get(`upload/${file.id}`)
+          let nameArr = file.name.split('.')
+          let name = nameArr.slice(0, nameArr.length - 1).join('.') + this.md5 + '.' + nameArr[nameArr.length - 1]
+
+          file.originalname = name
+        //   file.name = name
+          console.log('file is', file)
+          fd.append("image", file);
+          fd.append('md5', this.md5)
+          if(res.data === '') {
+              axios.post(`upload/file`, {
+                  id: this.md5,
+                  name: name
+              }).then(res2 => {
+                  console.log(res2)
+              })
+              axios({
         method: 'post',
-        url: 'blog/upload',
+        url: `upload`,
         data: fd,
         headers: {'Content-Type': 'multipart/form-data'}
     }).then((response) => {
@@ -88,7 +110,10 @@ export default {
         // const url = `http://120.55.90.86:3000/${response.data.filename}`
         this.insertImgCommand(url) 
         })
-
+          } else {
+const url = `http://localhost:3000/${res.data.name}`
+        this.insertImgCommand(url)
+          }
         },
         changeText() {
             this.textOwner.text = this.$refs.editorWindowContainer.innerHTML
