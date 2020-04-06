@@ -27,6 +27,18 @@ export default {
   components: {
     MEditor
   },
+  async mounted() {
+      const res = await axios.get(`/blog/${this.$route.params.blogId}`)
+      
+      console.log('res is', res)
+     res.data.text = res.data.text.replace('<div', '<div contenteditable="true"')
+      this.blog = res.data
+      this.$nextTick(() => {
+         const editorWind = document.getElementsByClassName("editor")[0]
+         editorWind.contenteditable = false
+      })
+      
+  },
   methods:{
     async createBlog() {
       this.blog.text = this.blog.text.replace('contenteditable="true"', '')
