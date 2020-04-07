@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { CreateBlogDto } from './dto/create-blog.dto'
+import { CreateBlogDto, UpdateBlogDto } from './dto'
 import { Blog } from './blog.entity'
 
 @Injectable()
@@ -16,6 +16,13 @@ export class BlogService {
         blog.title = createBlogDto.title;
         blog.text = createBlogDto.text;
         return this.blogRepository.save(blog)
+    }
+
+   async update(id: string, updateBlogDto: UpdateBlogDto): Promise<void> {
+        await this.blogRepository.update(id, {
+            title: updateBlogDto.title,
+            text: updateBlogDto.text
+        })
     }
 
     async findAll(): Promise<Blog[]> {

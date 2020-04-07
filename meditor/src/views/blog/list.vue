@@ -29,11 +29,11 @@ export default {
   },
   methods: {
       async getBlogList() {
-const res = await axios.get('blog')
-      this.blogList = res.data
+        const res = await axios.get('blog')
+        this.blogList = res.data
       },
       editBlog(blog) {
-          this.$router.push({path: `/blog/edit/${blog.id}`})
+        this.$router.push({path: `/blog/edit/${blog.id}`})
       },
       deleteBlog(blog) {
           let result = window.confirm(`确认删除${blog.title}吗？`);

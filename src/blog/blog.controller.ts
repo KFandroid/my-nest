@@ -1,5 +1,5 @@
-import { Controller, Get, Param, Post, Body, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
-import {CreateBlogDto} from './dto/create-blog.dto'
+import { Controller, Get, Param, Post, Body, Delete, UseInterceptors, UploadedFile, Put } from '@nestjs/common';
+import {CreateBlogDto, UpdateBlogDto} from './dto'
 import { Blog } from './blog.entity'
 import { BlogService } from './blog.service'
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -43,6 +43,11 @@ export class BlogController {
     @Get(':id')
     findOne(@Param('id') id: string): Promise<Blog> {
         return this.blogService.findOne(id);
+    }
+
+    @Put(':id')
+    update(@Param('id') id: string, @Body() updateBlogDto: UpdateBlogDto) {
+      return this.blogService.update(id, updateBlogDto);
     }
 
     @Delete(':id')

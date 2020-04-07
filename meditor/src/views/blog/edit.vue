@@ -7,7 +7,7 @@
     <div class="field-container">
     </div>
     <m-editor :textOwner="blog"></m-editor>
-    <button @click="createBlog">提交博客</button>
+    <button @click="createBlog">提交修改的博客</button>
   </div>
 </template>
 
@@ -29,18 +29,10 @@ export default {
   },
   async mounted() {
       const res = await axios.get(`/blog/${this.$route.params.blogId}`)
-      
-      console.log('res is', res)
-     res.data.text = res.data.text.replace('<div', '<div contenteditable="true"')
       this.blog = res.data
-      this.$nextTick(() => {
-         const editorWind = document.getElementsByClassName("editor")[0]
-         editorWind.contenteditable = false
-      })
-      
   },
   methods:{
-    async createBlog() {
+    async updateBlog() {
       this.blog.text = this.blog.text.replace('contenteditable="true"', '')
       const result = await axios.post('blog', this.blog)
       if(result.status === 201) {

@@ -116,7 +116,7 @@ const url = `http://localhost:3000/${res.data.name}`
           }
         },
         changeText() {
-            this.textOwner.text = this.$refs.editorWindowContainer.innerHTML
+            this.textOwner.text = this.$refs.editorWindow.innerHTML
         },
         changeFontSize(e) {
             const value = e.target.value
@@ -139,7 +139,7 @@ const url = `http://localhost:3000/${res.data.name}`
         },
         insertImgCommand(url) {
             this.$refs.editorWindow.innerHTML += `<img style="margin-left: 20%;" width="60%" src="${url}"/>`
-            this.textOwner.text = this.$refs.editorWindowContainer.innerHTML
+            this.textOwner.text = this.$refs.editorWindow.innerHTML
             // document.execCommand('insertImage', false, url)
         },
         dealDbClick(e) {
