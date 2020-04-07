@@ -2,6 +2,7 @@
 /dist
 /node_modules
 /myEdit/node_modules
+/files
 
 # Logs
 logs
