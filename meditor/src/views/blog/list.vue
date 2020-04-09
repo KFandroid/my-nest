@@ -2,11 +2,12 @@
   <div class="container">
       <ul>
           <li  v-for="blog in blogList" :key="blog.id">
-              <span @click="blogDetail(blog.id)"  class="title">{{blog.title}}</span>
-              <div class="btn-container">
+              <span @click="blogDetail(blog.id)"  class="title">《{{blog.title}}》</span>
+              <span class="date">{{blog.createdAt.slice(0, 10)}}</span>
+              <!-- <div class="btn-container">
                   <a @click="deleteBlog(blog)">删除</a>
                   <a @click="editBlog(blog)">编辑</a>
-              </div>
+              </div> -->
           </li>
       </ul>
   </div>
@@ -50,13 +51,43 @@ export default {
 </script>
 
 <style scoped lang="less">
+@import "../../styles/common.less";
+    ul {
+        list-style: none;
+        li {
+            color: @light-green;
+                line-height: 2;
+           position: relative;
+           width: 100%;
+           display: inline-flex;
+           justify-content: space-between;
+           z-index: 0;
+           &::after {
+                content: " ";
+                width: 100%;
+                border-bottom: 1px dashed @light-green;
+                position: absolute;
+                top: 50%;
+                right: 0;
+           }
+           
+        }
+    }
     .title {
-        width: 300px;
+        padding-right: 20px;
+    }
+    .date {
+        padding-left: 20px;
+    }
+    .title, .date {
+       z-index: 1;
         display: inline-block;
         overflow: hidden;
+        background: white;
+        max-width: 400px;
     }
     .title:hover, .btn-container a:hover {
-        color: blue;
+        color: green;
         cursor: pointer;
         text-decoration: underline;
     }

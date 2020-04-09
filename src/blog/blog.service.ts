@@ -26,7 +26,11 @@ export class BlogService {
     }
 
     async findAll(): Promise<Blog[]> {
-        return this.blogRepository.find();
+        return this.blogRepository.find({
+            order: {
+                createdAt: 'DESC'
+            }
+        })
     }
 
     findOne(id: string): Promise<Blog> {
