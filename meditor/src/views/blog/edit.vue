@@ -7,11 +7,12 @@
     <div class="field-container">
     </div>
     <m-editor :textOwner="blog"></m-editor>
-    <button @click="createBlog">提交修改的博客</button>
+    <button @click="updateBlog">提交修改的博客</button>
   </div>
 </template>
 
 <script>
+//TODO
 import MEditor from '@/components/MEditor'
 import axios from 'axios'
 export default {
@@ -34,11 +35,15 @@ export default {
   methods:{
     async updateBlog() {
       this.blog.text = this.blog.text.replace('contenteditable="true"', '')
-      const result = await axios.post('blog', this.blog)
-      if(result.status === 201) {
-        alert('创建博客成功！')
+      const result = await axios.put(`/blog/${this.$route.params.blogId}`, {
+        title: this.blog.title,
+        text: this.blog.text
+      })
+      if(result.status === 200) {
+        alert('修改博客成功！')
+        window.history.back()
       } else {
-        alert('创建博客失败！')
+        alert('修改博客失败！')
       }
     }
   }

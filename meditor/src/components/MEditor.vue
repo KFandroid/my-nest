@@ -163,6 +163,11 @@ const url = `http://localhost:3000/${res.data.name}`
     },
   components: {
 
+  },
+  watch: {
+      textOwner: function(val) {
+          this.$refs.editorWindow.innerHTML = val.text
+      }
   }
 }
 </script>
