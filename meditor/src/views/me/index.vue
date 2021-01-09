@@ -1,9 +1,9 @@
 <template>
   <div class="container">
       <div role="header">
-          <div role="menubar">
+      
            <div role="slogan">技术只是手段，生活才是目的</div>
-          </div>
+ 
       </div>
       <div role="main">
           <blog-list style="    max-width: 740px;"/>
@@ -11,7 +11,7 @@
               <div class="right-side-bar">
                   <div class="title">关于我</div>
                   <img class="personal-photo" src="../../assets/superMan.jpg" alt="superman"/>
-                  <span class="personal-introduce">一个爱生活的猛男</span>
+                  <span class="personal-introduce">爱生活 爱运动</span>
               </div>
               <div class="right-side-bar">
                   <div class="title">最新更新</div>
@@ -48,17 +48,15 @@ export default {
 
 [role="header"] {
     width: 100%;
+    max-width: @max-width;
     height: 50px;
     line-height: 50px;
     position: fixed;
     box-shadow: @--bs-sm;
     display: flex;
-    justify-content: center;
-    [role="menubar"] {
-        width: 100%;
-        max-width: 1280px;
-        margin: 0 20px;
+    justify-content: flex-start;
         [role="slogan"] {
+            margin-left: 20px;
             .md-font();
             float:left;
         }
@@ -66,7 +64,6 @@ export default {
             font-weight: @md-font-size;
             float: right;
         }
-    }
 }
 
 [role="main"] {

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="field-container">
-      <label for="blog-title">标题</label>
+      <label for="blog-title">*标题</label>
       <input v-model="blog.title" type="text" name="title" id="blog-title"/>
     </div>
     <div class="field-container">
@@ -20,7 +20,7 @@ export default {
     return {
       blog: {
         title: '',
-        text: ''
+        text: '',
       }
     }
   },
@@ -29,6 +29,11 @@ export default {
   },
   methods:{
     async createBlog() {
+      let spaceReg = /\s*/
+      if(spaceReg.test(this.blog.title) === true) {
+        alert('标题不能为空！')
+        return
+      }
       this.blog.text = this.blog.text.replace('contenteditable="true"', '')
       const result = await axios.post('blog', this.blog)
       if(result.status === 201) {
